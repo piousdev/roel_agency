@@ -8,6 +8,11 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { handle } from "hono/vercel";
 
+import {
+  errorHandler,
+  notFoundHandler,
+  requestLogger,
+} from "@/lib/api/error-handler";
 import { auth } from "@/lib/auth";
 
 /**
@@ -15,6 +20,17 @@ import { auth } from "@/lib/auth";
  * All routes are prefixed with /api automatically.
  */
 const app = new Hono().basePath("/api");
+
+/**
+ * Global middleware: Request logging.
+ */
+app.use("*", requestLogger);
+
+/**
+ * Global error handlers.
+ */
+app.onError(errorHandler);
+app.notFound(notFoundHandler);
 
 /**
  * CORS middleware for auth routes.
