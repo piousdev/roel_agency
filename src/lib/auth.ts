@@ -7,6 +7,8 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
+import { env } from "@/env";
+
 import { db } from "./db";
 import * as schema from "./db/schema";
 
@@ -66,13 +68,13 @@ export const auth = betterAuth({
    * Base URL for auth callbacks.
    * Used for redirects after authentication.
    */
-  baseURL: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
+  baseURL: env.NEXT_PUBLIC_APP_URL,
 
   /**
    * Secret key for signing tokens.
-   * Must be set in production environment.
+   * Validated at startup via t3-env.
    */
-  secret: process.env.BETTER_AUTH_SECRET,
+  secret: env.BETTER_AUTH_SECRET,
 });
 
 /**

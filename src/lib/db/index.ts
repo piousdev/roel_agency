@@ -7,54 +7,18 @@
 import { type Client, createClient } from "@libsql/client";
 import { drizzle, type LibSQLDatabase } from "drizzle-orm/libsql";
 
+import { env } from "@/env";
+
 import * as schema from "./schema";
 
 /**
- * Database configuration from environment variables.
+ * LibSQL client instance connected to Turso.
+ * Configuration is validated at startup via t3-env.
  */
-interface DatabaseConfig {
-  /** Turso database URL or local file path */
-  url: string;
-  /** Authentication token for Turso (optional for local) */
-  authToken: string | undefined;
-}
-
-/**
- * Retrieves and validates database configuration from environment.
- * @throws {Error} If TURSO_DATABASE_URL is not set
- * @returns {DatabaseConfig} Validated database configuration
- */
-function getDatabaseConfig(): DatabaseConfig {
-  const url = process.env.TURSO_DATABASE_URL;
-
-  if (!url) {
-    throw new Error(
-      "TURSO_DATABASE_URL is required. " +
-        "Set to 'file:local.db' for development or your Turso URL for production.",
-    );
-  }
-
-  return {
-    url,
-    authToken: process.env.TURSO_AUTH_TOKEN,
-  };
-}
-
-/**
- * Creates a libSQL client with the provided configuration.
- * @param {DatabaseConfig} config - Database connection configuration
- * @returns {Client} Configured libSQL client instance
- */
-function createDatabaseClient(config: DatabaseConfig): Client {
-  return createClient({
-    url: config.url,
-    authToken: config.authToken,
-  });
-}
-
-// Initialize database connection
-const config = getDatabaseConfig();
-const client = createDatabaseClient(config);
+const client: Client = createClient({
+  url: env.TURSO_DATABASE_URL,
+  authToken: env.TURSO_AUTH_TOKEN,
+});
 
 /**
  * Drizzle ORM database instance with full schema.
