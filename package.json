@@ -36,6 +36,9 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@secretlint/secretlint-rule-preset-recommend": "^11.2.5",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -45,11 +48,15 @@
     "drizzle-kit": "^0.31.7",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
+    "secretlint": "^11.2.5",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.0.14"
   },
   "lint-staged": {
+    "*": [
+      "secretlint"
+    ],
     "*.{ts,tsx,js,jsx}": [
       "biome check --write"
     ],
