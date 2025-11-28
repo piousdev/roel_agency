@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  // Externalize Pino to prevent bundling issues with thread-stream
+  serverExternalPackages: ["pino", "pino-pretty"],
 };
 
 export default withSentryConfig(nextConfig, {
@@ -28,8 +30,10 @@ export default withSentryConfig(nextConfig, {
   // Automatically instrument App Router
   autoInstrumentAppDirectory: true,
 
-  // Hide source maps from browser devtools
-  hideSourceMaps: true,
+  // Configure source maps
+  sourcemaps: {
+    deleteSourcemapsAfterUpload: true,
+  },
 
   // Tunnel Sentry events to avoid ad blockers
   tunnelRoute: "/monitoring",
