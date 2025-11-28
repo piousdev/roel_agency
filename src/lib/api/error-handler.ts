@@ -59,12 +59,17 @@ function createErrorResponse(
   statusCode: number,
   details?: unknown,
 ): ApiErrorResponse {
-  return {
+  const response: ApiErrorResponse = {
     error: code,
     message,
     statusCode,
-    ...(details && { details }),
   };
+
+  if (details !== undefined) {
+    response.details = details;
+  }
+
+  return response;
 }
 
 /**

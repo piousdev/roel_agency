@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "biome check",
+    "lint:fix": "biome check --write",
     "format": "biome format --write",
+    "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
@@ -19,7 +21,7 @@
   },
   "dependencies": {
     "@libsql/client": "^0.15.15",
-    "@sentry/nextjs": "^10.27.0",
+    "@sentry/nextjs": "^10",
     "@t3-oss/env-nextjs": "^0.13.8",
     "better-auth": "^1.4.3",
     "dotenv": "^17.2.3",

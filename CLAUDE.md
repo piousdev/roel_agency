@@ -11,6 +11,27 @@
 
 Commit messages must be clean and appear as written by the developer only.
 
+## Pre-commit Checks (Enforced)
+
+Commits are **blocked** if any of the following fail:
+
+1. **Lint-staged** - Biome lint/format on staged files
+2. **Type check** - `tsc --noEmit` must pass
+3. **Tests** - `pnpm test` must pass
+
+**You cannot commit if:**
+- There are lint or formatting errors
+- There are TypeScript type errors
+- Any tests are failing
+
+Run checks manually:
+```bash
+pnpm lint        # Check for lint errors
+pnpm lint:fix    # Auto-fix lint errors
+pnpm typecheck   # Check for type errors
+pnpm test        # Run all tests
+```
+
 ---
 
 # OpenSpec Instructions

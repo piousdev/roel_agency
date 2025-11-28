@@ -16,6 +16,9 @@ export default defineConfig({
     environment: "node",
     globals: true,
 
+    // Setup file - runs before all tests
+    setupFiles: ["./src/test/setup.ts"],
+
     // Coverage configuration
     coverage: {
       provider: "v8",

@@ -1,1 +1,29 @@
+#!/usr/bin/env sh
+
+echo "🔍 Running pre-commit checks..."
+
+# Run lint-staged (lint + format staged files)
+echo "📝 Linting staged files..."
 pnpm exec lint-staged
+if [ $? -ne 0 ]; then
+  echo "❌ Lint-staged failed. Please fix the errors above."
+  exit 1
+fi
+
+# Run type checking
+echo "🔎 Running type check..."
+pnpm tsc --noEmit
+if [ $? -ne 0 ]; then
+  echo "❌ Type check failed. Please fix the type errors above."
+  exit 1
+fi
+
+# Run tests
+echo "🧪 Running tests..."
+pnpm test
+if [ $? -ne 0 ]; then
+  echo "❌ Tests failed. Please fix the failing tests above."
+  exit 1
+fi
+
+echo "✅ All pre-commit checks passed!"
