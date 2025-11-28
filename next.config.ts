@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  // Externalize Pino to prevent bundling issues with thread-stream
+  serverExternalPackages: ["pino", "pino-pretty"],
 };
 
 export default withSentryConfig(nextConfig, {
